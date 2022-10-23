@@ -24,14 +24,14 @@
         $temp = 1;
     }
 
-    // echo var_dump($kode.' '.$nama.' '.$dukuh.' '.$alamat.' '.$nominal_pinjam.' '.$pokok.' '.$jasa.' '.$temp);
+    // echo var_dump($kode.' '.$nama.' '.$no_telepon.' '.$dukuh.' '.$alamat.' '.$nominal_pinjam.' '.$pokok.' '.$jasa.' '.$temp);
 
-    $query = mysqli_query($koneksi,"INSERT INTO anggota_pinjam (kode, nama, no_telepon, dukuh, 'alamat', 'id_pinjam') VALUES ('$kode', '$nama', '$no_telepon', '$dukuh', '$alamat', '$temp') ");
+    $query = mysqli_query($koneksi,"INSERT INTO anggota_pinjam (kode, nama, no_telepon, dukuh, alamat, nominal_pinjam, jum_pokok, jum_jasa, jangka_pinjaman, id_pinjam) VALUES ('$kode', '$nama', '$no_telepon', '$dukuh', '$alamat', '$nominal_pinjam', '$jum_pokok', '$jum_jasa', '$jangka_pinjaman', '$temp')");
 
     if ($query) {
-        header("location:pengeluaran.php"); 
+        header("location:pinjaman.php"); 
     }
     else{
-        echo "ERROR, data gagal diupdate". mysqli_error($koneksi);
+        echo "ERROR, data gagal ditambah". mysqli_error($koneksi);
     }
 ?>
