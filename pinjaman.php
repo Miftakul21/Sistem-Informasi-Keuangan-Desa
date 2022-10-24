@@ -66,7 +66,7 @@
                                             <button class="btn btn-danger" data-id="<?= $p['id'] ?>" onclick="hapus(this)"><i class="fa fa-trash"></i></button>
                                         </td>
                                         <td>
-                                            <a href="#" class="btn btn-primary"><i class="fa fa-info"></i> Detail</a>
+                                            <!-- <a href="detail_anggota_pinjam.php?id_anggota_pinjam=<?= $id; ?>" class="btn btn-primary"><i class="fa fa-info mr-1"></i> Detail</a> -->
                                         </td>
                                     </tr>
                                     <?php endforeach; ?>
@@ -89,75 +89,43 @@
                         <form action="tambah_anggota_pinjam.php" method="GET">
                             <div class="modal-body">
                                 <div class="container">
-                                    <div class="row">
-                                        <div class="col-md-6">
-                                            <div class="mb-3">
-                                                <label for="kode" class="form-label">Kode<span class="text-danger">*</span></label>
-                                                <input type="text" class="form-control" id="kode" name="kode" placeholder="contoh: POS 1">
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <div class="mb-3">
-                                                <label for="nama" class="form-label">Nama<span class="text-danger">*</span></label>
-                                                <input type="text" class="form-control" id="nama" name="nama" placeholder="contoh: Joko">
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <div class="mb-3">
-                                                <label for="no_telepon" class="form-label">Nomor Telepon<span class="text-danger">*</span></label>
-                                                <input type="number" class="form-control" id="no_telepon" name="no_telepon" placeholder="contoh: 085204118148">
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <div class="mb-3">
-                                                <label for="dukuh" class="form-label">Dukuh<span class="text-danger">*</span></label>
-                                                <input type="text" class="form-control" id="dukuh" name="dukuh" placeholder="contoh: Dukuh 1">
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <div class="mb-3">
-                                                <label for="alamat" class="form-label">Alamat<span class="text-danger">*</span></label>
-                                                <input type="text" class="form-control" id="alamat" name="alamat" placeholder="contoh: Mijil">
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <div class="mb-3">
-                                                <label for="nominal" class="form-label">Nominal Pinjaman<span class="text-danger">*</span></label>
-                                                <input type="number" class="form-control" id="nominal" name="nominal_pinjam" placeholder="contoh: 1000000">
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <div class="mb-3">
-                                                <label for="pokok" class="form-label">Jumlah Pokok<span class="text-danger">*</span></label>
-                                                <input type="number" class="form-control" id="pokok" name="jum_pokok" placeholder="contoh: 1000000">
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <div class="mb-3">
-                                                <label for="jasa" class="form-label">Jumlah Jasa<span class="text-danger">*</span></label>
-                                                <input type="number" class="form-control" id="jasa" name="jum_jasa" placeholder="contoh: 1000000">
-                                            </div>
-                                        </div> 
-                                        <div class="col-md-12">
-                                            <div class="mb-3">
-                                                <label for="jangka_pinjaman" class="form-label">Jangka Pinjaman<span class="text-danger">*</span></label>
-                                                <select name="jangka_pinjaman" id="jangka_pinjaman" class="form-control">
-                                                    <option value="-">-- Bulan --</option>
-                                                    <option value="1">1</option>                                                  
-                                                    <option value="2">2</option>                                                  
-                                                    <option value="3">3</option>                                                  
-                                                    <option value="4">4</option>                                                  
-                                                    <option value="5">5</option>                                                  
-                                                    <option value="6">6</option>                                                  
-                                                    <option value="7">7</option>                                                  
-                                                    <option value="8">8</option>                                                  
-                                                    <option value="9">9</option>                                                  
-                                                    <option value="10">10</option>                                                  
-                                                    <option value="11">11</option>                                                  
-                                                    <option value="12">12</option>                                                  
-                                                </select>
-                                            </div>
-                                        </div>
+                                    <div class="mb-3">
+                                        <label for="kode" class="form-label">Kode<span class="text-danger">*</span></label>
+                                        <input type="text" class="form-control" id="kode" name="kode" placeholder="contoh: POK 1">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="nama" class="form-label">Nama<span class="text-danger">*</span></label>
+                                        <input type="text" class="form-control" id="nama" name="nama" placeholder="contoh: Joko">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="dukuh" class="form-label">Dukuh<span class="text-danger">*</span></label>
+                                        <input type="text" class="form-control" id="dukuh" name="dukuh" placeholder="contoh: Dukuh 1">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="alamat" class="form-label">Alamat<span class="text-danger">*</span></label>
+                                        <input type="text" class="form-control" id="alamat" name="alamat" placeholder="contoh: MINGGIRSARI 01/01">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="nominal" class="form-label">Nominal Pinjaman<span class="text-danger">*</span></label>
+                                        <input type="number" class="form-control" id="nominal" name="nominal_pinjam" placeholder="contoh: 1000000">
+                                    </div>                                    
+                                    <div class="mb-3">
+                                        <label for="jangka_pinjaman" class="form-label">Jangka Pinjaman<span class="text-danger">*</span></label>
+                                        <select name="jangka_pinjaman" id="jangka_pinjaman" class="form-control">
+                                            <option value="-">-- Bulan --</option>
+                                            <option value="1">1</option>                                                  
+                                            <option value="2">2</option>                                                  
+                                            <option value="3">3</option>                                                  
+                                            <option value="4">4</option>                                                  
+                                            <option value="5">5</option>                                                  
+                                            <option value="6">6</option>                                                  
+                                            <option value="7">7</option>                                                  
+                                            <option value="8">8</option>                                                  
+                                            <option value="9">9</option>                                                  
+                                            <option value="10">10</option>                                                  
+                                            <option value="11">11</option>                                                  
+                                            <option value="12">12</option>                                                  
+                                        </select>
                                     </div>
                                 </div>  
                             </div>
@@ -170,7 +138,6 @@
                 </div>
             </div>
         </div>
-
         <!-- Modal Mengedit-->
         <?php 
             foreach($query_peminjam as $p):
@@ -185,76 +152,44 @@
                         <form action="edit_anggota_pinjam.php" method="GET">
                             <div class="modal-body">
                                 <div class="container">
-                                    <div class="row">
-                                        <div class="col-md-6">
-                                            <div class="mb-3">
-                                                <label for="kode" class="form-label">Kode<span class="text-danger">*</span></label>
-                                                <input type="hidden" name="id" value="<?= $p['id']; ?>">
-                                                <input type="text" class="form-control" id="kode" name="kode" value="<?= $p['kode']; ?>">
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <div class="mb-3">
-                                                <label for="nama" class="form-label">Nama<span class="text-danger">*</span></label>
-                                                <input type="text" class="form-control" id="nama" name="nama" value="<?= $p['nama']; ?>">
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <div class="mb-3">
-                                                <label for="no_telepon" class="form-label">Nomor Telepon<span class="text-danger">*</span></label>
-                                                <input type="number" class="form-control" id="no_telepon" name="no_telepon" value="<?= $p['no_telepon']; ?>">
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <div class="mb-3">
-                                                <label for="dukuh" class="form-label">Dukuh<span class="text-danger">*</span></label>
-                                                <input type="text" class="form-control" id="dukuh" name="dukuh" value="<?= $p['dukuh']; ?>">
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <div class="mb-3">
-                                                <label for="alamat" class="form-label">Alamat<span class="text-danger">*</span></label>
-                                                <input type="text" class="form-control" id="alamat" name="alamat" value="<?= $p['alamat']; ?>">
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <div class="mb-3">
-                                                <label for="nominal" class="form-label">Nominal Pinjaman<span class="text-danger">*</span></label>
-                                                <input type="number" class="form-control" id="nominal" name="nominal_pinjam" value="<?= $p['nominal_pinjam']; ?>">
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <div class="mb-3">
-                                                <label for="pokok" class="form-label">Jumlah Pokok<span class="text-danger">*</span></label>
-                                                <input type="number" class="form-control" id="pokok" name="jum_pokok" value="<?= $p['jum_pokok']; ?>">
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <div class="mb-3">
-                                                <label for="jasa" class="form-label">Jumlah Jasa<span class="text-danger">*</span></label>
-                                                <input type="number" class="form-control" id="jasa" name="jum_jasa" value="<?= $p['jum_jasa']; ?>">
-                                            </div>
-                                        </div> 
-                                        <div class="col-md-12">
-                                            <div class="mb-3">
-                                                <label for="jangka_pinjaman" class="form-label">Jangka Pinjaman<span class="text-danger">*</span></label>
-                                                <select name="jangka_pinjaman" id="jangka_pinjaman" class="form-control">
-                                                    <option value="-">-- Bulan --</option>
-                                                    <option value="1">1</option>                                                  
-                                                    <option value="2">2</option>                                                  
-                                                    <option value="3">3</option>                                                  
-                                                    <option value="4">4</option>                                                  
-                                                    <option value="5">5</option>                                                  
-                                                    <option value="6">6</option>                                                  
-                                                    <option value="7">7</option>                                                  
-                                                    <option value="8">8</option>                                                  
-                                                    <option value="9">9</option>                                                  
-                                                    <option value="10">10</option>                                                  
-                                                    <option value="11">11</option>                                                  
-                                                    <option value="12">12</option>                                                  
-                                                </select>
-                                            </div>
-                                        </div>
+                                    <div class="mb-3">
+                                        <label for="kode" class="form-label">Kode<span class="text-danger">*</span></label>
+                                        <input type="hidden" name="id" value="<?= $p['id'] ?>">
+                                        <input type="text" class="form-control" id="kode" name="kode" value="<?= $p['kode']; ?>">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="nama" class="form-label">Nama<span class="text-danger">*</span></label>
+                                        <input type="text" class="form-control" id="nama" name="nama" value="<?= $p['nama']; ?>">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="dukuh" class="form-label">Dukuh<span class="text-danger">*</span></label>
+                                        <input type="text" class="form-control" id="dukuh" name="dukuh" value="<?= $p['dukuh']; ?>">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="alamat" class="form-label">Alamat<span class="text-danger">*</span></label>
+                                        <input type="text" class="form-control" id="alamat" name="alamat" value="<?= $p['alamat']; ?>">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="nominal" class="form-label">Nominal Pinjaman<span class="text-danger">*</span></label>
+                                        <input type="number" class="form-control" id="nominal" name="nominal_pinjam" value="<?= $p['nominal_pinjam']; ?>">
+                                    </div>                                    
+                                    <div class="mb-3">
+                                        <label for="jangka_pinjaman" class="form-label">Jangka Pinjaman<span class="text-danger">*</span></label>
+                                        <select name="jangka_pinjaman" id="jangka_pinjaman" class="form-control">
+                                            <option value="-">-- Bulan --</option>
+                                            <option value="1">1</option>                                                  
+                                            <option value="2">2</option>                                                  
+                                            <option value="3">3</option>                                                  
+                                            <option value="4">4</option>                                                  
+                                            <option value="5">5</option>                                                  
+                                            <option value="6">6</option>                                                  
+                                            <option value="7">7</option>                                                  
+                                            <option value="8">8</option>                                                  
+                                            <option value="9">9</option>                                                  
+                                            <option value="10">10</option>                                                  
+                                            <option value="11">11</option>                                                  
+                                            <option value="12">12</option>                                                  
+                                        </select>
                                     </div>
                                 </div>  
                             </div>
