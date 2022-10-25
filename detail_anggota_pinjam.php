@@ -1,5 +1,5 @@
 <?php
-require 'cek-sesi.php';
+  require 'cek-sesi.php';
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -19,8 +19,10 @@ require 'cek-sesi.php';
   require ('koneksi.php');
   require ('sidebar.php');
 
+  $id = $_GET['id_anggota_pinjam'];
+  $query_data_pinjam = mysqli_query($koneksi, "SELECT a.*, b.nominal_pinjaman, b.pokok, b.jasa, b.total_pokok_jasa, b.pinjaman_penelusuran, b.pinjaman_gabungan, b.jangka_pinjaman FROM anggota_pinjam AS a JOIN pinjaman AS b ON a.id = b.id_pinjaman WHERE a.id = '$id'");
 
-
+  $query_angsuran = mysqli_query($koneksi, "SELECT * FROM angsuran WHERE id_anggota = '$id'");
 
 ?>
     <div id="content">
@@ -28,101 +30,183 @@ require 'cek-sesi.php';
             <h1>Data Pinjaman Anggaran</h1>
             <a href="pinjaman.php" class="btn btn-danger">Kembali</a>
         </nav>
-
         <!-- Informasi Data Anggota Peminjam -->
         <div class="container-fluid">
-            <button class="btn btn-warning fa fa-edit" data-toggle="modal" data-target="#myKaryawanEdit">Edit</button>
-            <div class="card mt-2 shadow-sm" style="width: 70%;">
-                <div class="card-body">
-                    <div class="row">
-                        <div class="col-md-4">
-                            <table class="table table-borderless">
-                              <tbody>
-                                <tr>
-                                  <th>Kode</th>
-                                  <td>: Pribadi</td>
-                                </tr>                               
-                              </tbody>
-                              <tbody>
-                                <tr>
-                                  <th>Nama</th>
-                                  <td>: Mark</td>
-                                </tr>                               
-                              </tbody>
-                              <tbody>
-                                <tr>
-                                  <th>Dukuh</th>
-                                  <td>: Dukuh 1</td>
-                                </tr>                               
-                              </tbody>
-                              <tbody>
-                                <tr>
-                                  <th>Alamat</th>
-                                  <td>: Mijil</td>
-                                </tr>                               
-                              </tbody>
+          <div class="row">
+            <div class="col-md-9">
+              <div class="card mt-2 shadow-sm">
+                  <div class="card-header py-1 d-flex flex-row justify-content-between align-items-center">
+                      <h6 class="m-0 font-weight-bold text-primary">Data Anggota Pinjaman</h6>
+                      <!-- button untuk mengedit keterangan anggaran -->
+                      <?php foreach($query_data_pinjam as $d): ?>
+                        <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#myKeteranganAnggota<?= $d['id'] ?>"><i class="fa fa-edit"></i></button>
+                      <?php endforeach; ?>
+                  </div>
+                  <div class="card-body">
+                      <div class="row">
+                            <?php foreach($query_data_pinjam as $d): ?>
+                              <div class="col-md-4">
+                                  <table class="table table-borderless">
+                                    <tbody>
+                                      <tr>
+                                        <th>Kode</th>
+                                        <td>: <?= $d['kode']; ?></td>
+                                      </tr>                               
+                                    </tbody>
+                                    <tbody>
+                                      <tr>
+                                        <th>Nama</th>
+                                        <td>: <?= $d['nama']; ?></td>
+                                      </tr>                               
+                                    </tbody>
+                                    <tbody>
+                                      <tr>
+                                        <th>Dukuh</th>
+                                        <td>: <?= $d['dukuh']; ?></td>
+                                      </tr>                               
+                                    </tbody>
+                                    <tbody>
+                                      <tr>
+                                        <th>Alamat</th>
+                                        <td>: <?= $d['alamat']; ?></td>
+                                      </tr>                               
+                                    </tbody>
+                                  </table>
+                              </div>
+                              <div class="col-md-4">
+                                  <table class="table table-borderless">
+                                    <tbody>
+                                      <tr>
+                                        <th>Nominal Pinjam</th>
+                                        <td>: Rp. <?= number_format($d['nominal_pinjaman'],2,',','.'); ?></td>
+                                      </tr>                               
+                                    </tbody>
+                                    <tbody>
+                                      <tr>
+                                        <th>Jumlah Pokok</th>
+                                        <td>: Rp. <?= number_format($d['pokok'],2,',','.'); ?></td>
+                                      </tr>                               
+                                    </tbody>
+                                    <tbody>
+                                      <tr>
+                                        <th>Jumlah Jasa</th>
+                                        <td>: Rp. <?= number_format($d['jasa'],2,',','.'); ?></td>
+                                      </tr>                               
+                                    </tbody>
+                                    <tbody>
+                                      <tr>
+                                        <th>Total Pokok & Jasa</th>
+                                        <td>: Rp. <?= number_format($d['total_pokok_jasa'],2,',','.'); ?></td>
+                                      </tr>                               
+                                    </tbody>
+                                  </table>
+                              </div>
+                              <div class="col-md-4">
+                                  <table class="table table-borderless">
+                                    <tbody>
+                                      <tr>
+                                        <th>Jangka Pinjaman</th>
+                                        <td>: <?= $d['jangka_pinjaman']; ?> Bulan</td>
+                                      </tr>                               
+                                    </tbody>
+                                    <tbody>
+                                      <tr>
+                                        <th>Pinjaman Penelusuran</th>
+                                        <td>: Rp. <?= number_format($d['pinjaman_penelusuran'],2,',','.'); ?></td>
+                                      </tr>                               
+                                    </tbody>
+                                    <tbody>
+                                      <tr>
+                                        <th>Pinjaman Gabungan</th>
+                                        <td>: Rp. <?= number_format($d['pinjaman_gabungan'],2,',','.'); ?></td>
+                                      </tr>                               
+                                    </tbody>
+                                    <tbody>
+                                      <tr>
+                                        <th>Keterangan</th>
+                                        <td>
+                                          : <?= isset($d['keterangan']) ? $d['keterangan'] : 'kosong'; ?>
+                                        </td>
+                                      </tr>                               
+                                    </tbody>
+                                  </table>
+                              </div>
+                            <?php endforeach; ?>
+                      </div>
+                  </div>
+              </div>
+            </div>
+            <!-- catatan -->
+            <!-- <div class="col-md-3">
+              <div class="card mt-2 shadow mb-4">
+                    <div class="card-header py-2 d-flex flex-row align-items-center justify-content-between">
+                        <h6 class="m-0 font-weight-bold text-primary">Catatan</h6>
+                        <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#myAngsuranTambah"><i class="fa fa-edit"></i></button>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-hover table-striped w-100" id="dataTable">
+                                <thead>
+                                    <tr>
+                                        <th>No</th>
+                                        <th>Tanggal</th>                   
+                                        <th>Pokok</th>   
+                                        <th>Jasa</th>                   
+                                        <th>Aksi</th>                
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                </tbody>
                             </table>
-                        </div>
-                        <div class="col-md-4">
-                            <table class="table table-borderless">
-                              <tbody>
-                                <tr>
-                                  <th>Nominal Pinjam</th>
-                                  <td>: Rp. 1.000.000</td>
-                                </tr>                               
-                              </tbody>
-                              <tbody>
-                                <tr>
-                                  <th>Jumlah Pokok</th>
-                                  <td>: Rp.1.000</td>
-                                </tr>                               
-                              </tbody>
-                              <tbody>
-                                <tr>
-                                  <th>Jumlah Jasa</th>
-                                  <td>: Rp.2.000</td>
-                                </tr>                               
-                              </tbody>
-                              <tbody>
-                                <tr>
-                                  <th>Jangka Pinjaman</th>
-                                  <td>: 12 Bulan</td>
-                                </tr>                               
-                              </tbody>
-                            </table>
-                        </div>
-                        <div class="col-md-4">
-                            <table class="table table-borderless">
-                              <tbody>
-                                <tr>
-                                  <th>Pinjaman Penelusuran</th>
-                                  <td>: Rp. 1.500.000</td>
-                                </tr>                               
-                              </tbody>
-                              <tbody>
-                                <tr>
-                                  <th>Pinjaman Gabungan</th>
-                                  <td>: Rp. 55.000</td>
-                                </tr>                               
-                              </tbody>
-                              <tbody>
-                                <tr>
-                                  <th>Keterangan</th>
-                                  <td>: Perpanjangan</td>
-                                </tr>                               
-                              </tbody>
-                            </table>
-                        </div>
+                        </div>                    
                     </div>
                 </div>
-            </div>
+            </div> -->
+          </div>
         </div>
         
-        <!-- Memasukan Data Informasi Pribadi -->
-        <div class="container-fluid">
+        <!-- Memasukan Data Angsuran Pinjaman -->
+        <div class="container-fluid mt-3">
           <div class="row">
             <div class="col-md-6">
-
+              <div class="card shadow mb-4">
+                    <div class="card-header py-2 d-flex flex-row align-items-center justify-content-between">
+                        <h6 class="m-0 font-weight-bold text-primary">Data Angsuran Bumdes Desa Maju</h6>
+                        <button type="button" class="btn btn-success" data-toggle="modal" data-target="#myAngsuranTambah"><i class="fa fa-plus"> Tambah Data</i></button>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-hover table-striped w-100" id="dataTable">
+                                <thead>
+                                    <tr>
+                                        <th>No</th>
+                                        <th>Tanggal</th>                   
+                                        <th>Pokok</th>   
+                                        <th>Jasa</th>                   
+                                        <th>Aksi</th>                
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <?php
+                                        $no = 1; 
+                                        foreach($query_angsuran as $a):
+                                    ?>
+                                    <tr>
+                                        <th scope="row"><?= $no++; ?></th>
+                                        <td><?= $a['tgl'] ?></td>
+                                        <td>Rp. <?= number_format($a['pokok'],2,',','.'); ?></td>
+                                        <td>Rp. <?= number_format($a['jasa'],2,',','.'); ?></td>
+                                        <td>
+                                            <button class="btn btn-warning" data-toggle="modal" data-target="#myPinjamanEdit"><i class="fa fa-edit"></i></button>
+                                            <button class="btn btn-danger" data-id="" onclick="hapus(this)"><i class="fa fa-trash"></i></button>
+                                        </td>
+                                    </tr>
+                                    <?php  endforeach; ?>
+                                </tbody>
+                            </table>
+                        </div>                    
+                    </div>
+                </div>
             </div>
           </div>
           <div class="row">
@@ -135,175 +219,148 @@ require 'cek-sesi.php';
       <?php require 'footer.php'?>
     </div>
 
+    <!-- Live Modal Angsuran Pinjaman -->
+    <div id="myAngsuranTambah" class="modal fade" role="dialog">
+        <div class="modal-dialog model-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title">Tambah Data</h4>
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    </div>
+                        <form action="tambah_anggaran.php" method="GET">
+                            <div class="modal-body">
+                                <div class="container">
+                                    <div class="mb-3">
+                                        <label for="tgl" class="form-label">Tanggal<span class="text-danger">*</span></label>
+                                        <input type="hidden" name="id_anggota" value="<?= $id ?>">
+                                        <input type="date" class="form-control" id="tgl" name="tgl">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="pokok" class="form-label">Pokok<span class="text-danger">*</span></label>
+                                        <input type="number" class="form-control" id="pokok" name="pokok" placeholder="contoh: 100000">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="jasa" class="form-label">Jasa<span class="text-danger">*</span></label>
+                                        <input type="number" class="form-control" id="jasa" name="jasa" placeholder="contoh: 100000">
+                                    </div>                                
+                                </div>  
+                            </div>
+                            <!-- footer modal -->
+                            <div class="modal-footer">
+                            <button type="submit" class="btn btn-success" >Tambah</button>
+                        </form>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Keluar</button>
+                    </div>
+                </div>
+        </div>
+    </div>
+
+    <!-- Live Modal Untuk Update Keterangan -->
+    <?php foreach($query_data_pinjam as $d): ?>
+    <div id="myKeteranganAnggota<?= $d['id']; ?>" class="modal fade" role="dialog">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title">Edit Keterangan</h4>
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    </div>
+                        <form action="tambah_anggota_pinjam.php" method="GET">
+                            <div class="modal-body">
+                                <div class="container">
+                                    <div class="row">
+                                      <div class="col-md-6">
+                                        <div class="mb-3">
+                                            <label for="kode" class="form-label">Kode<span class="text-danger">*</span></label>
+                                            <input type="text" class="form-control" id="kode" name="kode" value="<?= $d['kode']; ?>" disabled>
+                                        </div>
+                                      </div>
+                                      <div class="col-md-6">
+                                        <div class="mb-3">
+                                            <label for="nama" class="form-label">Nama<span class="text-danger">*</span></label>
+                                            <input type="text" class="form-control" id="nama" name="nama" value="<?= $d['nama']; ?>" disabled>
+                                        </div>
+                                      </div>
+                                      <div class="col-md-6">
+                                          <div class="mb-3">
+                                            <label for="dukuh" class="form-label">Dukuh<span class="text-danger">*</span></label>
+                                            <input type="text" class="form-control" id="dukuh" name="dukuh" value="<?= $d['dukuh']; ?>" disabled>
+                                        </div>
+                                      </div>
+                                      <div class="col-md-6">
+                                        <div class="mb-3">
+                                            <label for="alamat" class="form-label">Alamat<span class="text-danger">*</span></label>
+                                            <input type="text" class="form-control" id="alamat" name="alamat" value="<?= $d['alamat']; ?>" disabled>
+                                        </div>
+                                      </div>
+                                      <div class="col-md-6">
+                                        <div class="mb-3">
+                                            <label for="nominal" class="form-label">Nominal Pinjaman<span class="text-danger">*</span></label>
+                                            <input type="number" class="form-control" id="nominal" name="nominal_pinjam" value="<?= $d['nominal_pinjaman']; ?>" disabled>
+                                        </div> 
+                                      </div>
+                                      <div class="col-md-6">
+                                        <div class="mb-3">
+                                            <label for="pokok" class="form-label">Jumlah Pokok<span class="text-danger">*</span></label>
+                                            <input type="text" class="form-control" id="pokok" name="pokok" value="<?= $d['pokok']; ?>" disabled>
+                                        </div>
+                                      </div>
+                                      <div class="col-md-6">
+                                        <div class="mb-3">
+                                            <label for="jasa" class="form-label">Jumlah Jasa<span class="text-danger">*</span></label>
+                                            <input type="number" class="form-control" id="jasa" name="jasa" value="<?= $d['jasa']; ?>" disabled>
+                                        </div> 
+                                      </div>
+                                      <div class="col-md-6">
+                                        <div class="mb-3">
+                                            <label for="total_pokok" class="form-label">Total Pokok & Jasa<span class="text-danger">*</span></label>
+                                            <input type="number" class="form-control" id="total_pokok" name="total_pokok" value="<?= $d['total_pokok_jasa']; ?>" disabled>
+                                        </div> 
+                                      </div>
+                                      <div class="col-md-6">
+                                        <div class="mb-3">
+                                            <label for="pinjaman_penelusuran" class="form-label">Pinjaman Penelusuran<span class="text-danger">*</span></label>
+                                            <input type="text" class="form-control" id="pinjaman_penelusuran" name="pinjaman_penelusuran" value="<?= $d['pinjaman_penelusuran']; ?>" disabled>
+                                        </div>
+                                      </div>
+                                      <div class="col-md-6">
+                                        <div class="mb-3">
+                                            <label for="pinjaman_gabungan" class="form-label">Pinjaman Gabungan<span class="text-danger">*</span></label>
+                                            <input type="number" class="form-control" id="pinjaman_gabungan" name="pinjaman_gabungan" value="<?= $d['pinjaman_gabungan']; ?>" disabled>
+                                        </div> 
+                                      </div>
+                                    </div>                                   
+                                    <div class="mb-3">
+                                        <label for="keterangan" class="form-label">Keterangan<span class="text-danger">*</span></label>
+                                        <select name="keterangan" id="keterangan" class="form-control">
+                                            <option value="-">-- Pilih Kategori --</option>                                                 
+                                            <option value="Belum Lunas">Belum Lunas</option>                                                 
+                                            <option value="Perpanjangan">Perpanjangan</option>                                                 
+                                            <option value="Lunas">Lunas</option>                                                 
+                                            <!-- <option value="Perpanjangan">-- Perpanjangan --</option>                                                                                                                                             -->
+                                        </select>
+                                    </div>
+                                </div>  
+                            </div>
+                            <!-- footer modal -->
+                            <div class="modal-footer">
+                            <button type="submit" class="btn btn-success" >Tambah</button>
+                        </form>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Keluar</button>
+                    </div>
+                </div>
+            </div>
+    </div>
+    <?php endforeach; ?>
+
+
+
   </div>
 
-  <a class="scroll-to-top rounded" href="#page-top">
-    <i class="fas fa-angle-up"></i>
-  </a>
 
   <?php require 'logout-modal.php'; ?>
   <script src="vendor/jquery/jquery.min.js"></script>
   <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
   <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
   <script src="js/sb-admin-2.min.js"></script>
-  <script src="vendor/chart.js/Chart.min.js"></script>
-  <script type="text/javascript">
-      // Set new default font family and font color to mimic Bootstrap's default styling
-      Chart.defaults.global.defaultFontFamily = 'Nunito', '-apple-system,system-ui,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif';
-      Chart.defaults.global.defaultFontColor = '#858796';
-
-      function number_format(number, decimals, dec_point, thousands_sep) {
-        // *     example: number_format(1234.56, 2, ',', ' ');
-        // *     return: '1 234,56'
-        number = (number + '').replace(',', '').replace(' ', '');
-        var n = !isFinite(+number) ? 0 : +number,
-          prec = !isFinite(+decimals) ? 0 : Math.abs(decimals),
-          sep = (typeof thousands_sep === 'undefined') ? ',' : thousands_sep,
-          dec = (typeof dec_point === 'undefined') ? '.' : dec_point,
-          s = '',
-          toFixedFix = function(n, prec) {
-            var k = Math.pow(10, prec);
-            return '' + Math.round(n * k) / k;
-          };
-        // Fix for IE parseFloat(0.55).toFixed(0) = 0;
-        s = (prec ? toFixedFix(n, prec) : '' + Math.round(n)).split('.');
-        if (s[0].length > 3) {
-          s[0] = s[0].replace(/\B(?=(?:\d{3})+(?!\d))/g, sep);
-        }
-        if ((s[1] || '').length < prec) {
-          s[1] = s[1] || '';
-          s[1] += new Array(prec - s[1].length + 1).join('0');
-        }
-        return s.join(dec);
-      }
-
-      // Area Chart Example
-      var ctx = document.getElementById("myAreaChart");
-      var myLineChart = new Chart(ctx, {
-        type: 'line',
-        data: {
-          labels: ["7 hari lalu","6 hari lalu", "5 hari lalu", "4 hari lalu", "3 hari lalu", "2 hari lalu", "1 hari lalu"],
-          datasets: [{
-            label: "Pendapatan",
-            lineTension: 0.3,
-            backgroundColor: "rgba(78, 115, 223, 0.05)",
-            borderColor: "rgba(78, 115, 223, 1)",
-            pointRadius: 3,
-            pointBackgroundColor: "rgba(78, 115, 223, 1)",
-            pointBorderColor: "rgba(78, 115, 223, 1)",
-            pointHoverRadius: 3,
-            pointHoverBackgroundColor: "rgba(78, 115, 223, 1)",
-            pointHoverBorderColor: "rgba(78, 115, 223, 1)",
-            pointHitRadius: 10,
-            pointBorderWidth: 2,
-            data: [<?php echo $tujuhhari['0']?>, <?php echo $enamhari['0'] ?>, <?php echo $limahari['0'] ?>, <?php echo $empathari['0'] ?>, <?php echo $tigahari['0'] ?>, <?php echo $duahari['0'] ?>, <?php echo $satuhari['0'] ?>],
-          }],
-        },
-        options: {
-          maintainAspectRatio: false,
-          layout: {
-            padding: {
-              left: 10,
-              right: 25,
-              top: 25,
-              bottom: 0
-            }
-          },
-          scales: {
-            xAxes: [{
-              time: {
-                unit: 'date'
-              },
-              gridLines: {
-                display: false,
-                drawBorder: false
-              },
-              ticks: {
-                maxTicksLimit: 7
-              }
-            }],
-            yAxes: [{
-              ticks: {
-                maxTicksLimit: 5,
-                padding: 10,
-                // Include a dollar sign in the ticks
-                callback: function(value, index, values) {
-                  return 'Rp.' + number_format(value);
-                }
-              },
-              gridLines: {
-                color: "rgb(234, 236, 244)",
-                zeroLineColor: "rgb(234, 236, 244)",
-                drawBorder: false,
-                borderDash: [2],
-                zeroLineBorderDash: [2]
-              }
-            }],
-          },
-          legend: {
-            display: false
-          },
-          tooltips: {
-            backgroundColor: "rgb(255,255,255)",
-            bodyFontColor: "#858796",
-            titleMarginBottom: 10,
-            titleFontColor: '#6e707e',
-            titleFontSize: 14,
-            borderColor: '#dddfeb',
-            borderWidth: 1,
-            xPadding: 15,
-            yPadding: 15,
-            displayColors: false,
-            intersect: false,
-            mode: 'index',
-            caretPadding: 10,
-            callbacks: {
-              label: function(tooltipItem, chart) {
-                var datasetLabel = chart.datasets[tooltipItem.datasetIndex].label || '';
-                return datasetLabel + ': Rp.' + number_format(tooltipItem.yLabel);
-              }
-            }
-          }
-        }
-      });        
-    </script>
-  
-    <script type="text/javascript">
-        
-        // Set new default font family and font color to mimic Bootstrap's default styling
-      Chart.defaults.global.defaultFontFamily = 'Nunito', '-apple-system,system-ui,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif';
-      Chart.defaults.global.defaultFontColor = '#858796';
-      // Pie Chart Example
-      var ctx = document.getElementById("myPieChart");
-      var myPieChart = new Chart(ctx, {
-        type: 'doughnut',
-        data: {
-          labels: ["Pendapatan", "Pengeluaran", "Sisa"],
-          datasets: [{
-            data: [<?php echo $jumlahmasuk/1000000 ?>, <?php echo $jumlahkeluar/1000000 ?>, <?php echo $uang/1000000 ?>],
-            backgroundColor: ['#4e73df', '#e74a3b', '#36b9cc'],
-            hoverBackgroundColor: ['#2e59d9', '#e74a3b', '#2c9faf'],
-            hoverBorderColor: "rgba(234, 236, 244, 1)",
-          }],
-        },
-        options: {
-          maintainAspectRatio: false,
-          tooltips: {
-            backgroundColor: "rgb(255,255,255)",
-            bodyFontColor: "#858796",
-            borderColor: '#dddfeb',
-            borderWidth: 1,
-            xPadding: 15,
-            yPadding: 15,
-            displayColors: false,
-            caretPadding: 10,
-          },
-          legend: {
-            display: false
-          },
-          cutoutPercentage: 80,
-        },
-      });
-    </script>
   </body>
 </html>

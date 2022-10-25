@@ -77,8 +77,8 @@ require 'cek-sesi.php';
                                                 <td>Rp. <?= number_format($d['saldo'],2,',','.'); ?></td>
                                                 <td>
                                                     <div class="container d-flex">
-                                                        <button type="button" class="btn btn-warning fa fa-edit" data-toggle="modal" data-target="#myAngsuranEdit<?= $d['id_kas']; ?>"></button>    
-                                                        <a href="hapus_anggaran_kas.php?id_kas=<?= $d['id_kas'] ?>" class="btn btn-danger ml-3" onclick="return confirm('Anda Ingin Menghapus?')"><i class="fa fa-trash"></i></a>
+                                                        <button class="btn btn-warning fa fa-edit mr-2" data-toggle="modal" data-target="#myAngsuranEdit<?= $d['id_kas']; ?>"></button>
+                                                        <button class="btn btn-danger" data-id="<?= $d['id_kas'] ?>" onclick="hapus(this)"><i class="fa fa-trash"></i></button>                                                       
                                                     </div>                                   
                                                 </td>
                                             </tr>
@@ -261,6 +261,7 @@ require 'cek-sesi.php';
     </div>
 </div>
     <?php require 'logout-modal.php'; ?>
+        <script src="js/jquery.js"></script>
         <script src="vendor/jquery/jquery.min.js"></script>                                                
         <script src="js/jquery.js"></script>
         <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
@@ -271,7 +272,27 @@ require 'cek-sesi.php';
         <script type="text/javascript">
             $(document).ready(() => {
                 $('#dataTable').DataTable();
-            })
+            });
+            
+            const hapus = (el) => {
+                let id = $(el).data('id');
+                let konfirmasi = confirm('Anda ingin menghapus?');
+
+                if(konfirmasi) {
+                    $.ajax({
+                        url: 'hapus_anggaran_kas.php',
+                        type: 'GET',
+                        data: {
+                            id_kas: id
+                        },
+                        cache: false,
+                        success: (data) => {
+                            console.log('');
+                            location.reload(true);
+                        }
+                    })
+                } 
+            }
         </script>
     </body>
 </html>

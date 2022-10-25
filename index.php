@@ -1,5 +1,5 @@
 <?php
-require 'cek-sesi.php';
+  require 'cek-sesi.php';
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -27,7 +27,15 @@ require 'cek-sesi.php';
   $query_karyawan = mysqli_query($koneksi, 'SELECT COUNT(*) AS jum_karyawan FROM karyawan');
   $jum_karyawan = mysqli_fetch_array($query_karyawan);
 
+  // Jumlah pemasukan hari ini
+  $query_jum_pemasukan = mysqli_query($koneksi, "SELECT SUM(debet) AS pemasukan FROM kas WHERE tgl = CURDATE()");
+  $jum_pemasukan = mysqli_fetch_array($query_jum_pemasukan);
+  $jumlah_pemasukan = isset($jum_pemasukan['pemasukan']) ? $jum_pemasukan['pemasukan'] : 0;
 
+  // Jumlah pengeluaran hari ini
+  $query_jum_pengeluaran = mysqli_query($koneksi, "SELECT SUM(kredit) AS pengeluaran FROM kas WHERE tgl = CURDATE()");
+  $jum_pengeluaran = mysqli_fetch_array($query_jum_pengeluaran);
+  $jumlah_pengeluaran = isset($jum_pengeluaran['pengeluaran']) ? $jum_pengeluaran['pengeluaran'] : 0;
 
 ?>
       <div id="content">
@@ -35,13 +43,14 @@ require 'cek-sesi.php';
           <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
             <i class="fa fa-bars"></i>
           </button>
-          <h1> Selamat Datang, <?=$_SESSION['nama']?></h1> <?php require 'user.php'; ?>
+          <h1>Sistem Keuagan Bumdes</h1>
+          
+          <?php require 'user.php'; ?>
 
         </nav>
         <div class="container-fluid">
           <div class="d-sm-flex align-items-center justify-content-between mb-4">
             <h1 class="h3 mb-0 text-gray-800">Dashboard</h1>
-            <a href="export-semua.php" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i class="fas fa-download fa-sm text-white-50"></i> Download Laporan</a>
           </div>
           <div class="row">
             <!-- Pendapatan Hari Ini -->
@@ -50,8 +59,8 @@ require 'cek-sesi.php';
                 <div class="card-body">
                   <div class="row no-gutters align-items-center">
                     <div class="col mr-2">
-                      <div class="text-xs font-weight-bold text-success text-uppercase mb-1">Pendapatan (Hari Ini)</div>
-                      <div class="h5 mb-0 font-weight-bold text-gray-800">Rp.10.000</div>
+                      <div class="text-xs font-weight-bold text-success text-uppercase mb-1">Pemasukan (Hari Ini)</div>
+                      <div class="h5 mb-0 font-weight-bold text-gray-800">Rp. <?= number_format($jumlah_pemasukan,2,',','.'); ?></div>
                     </div>
                     <div class="col-auto">
                       <i class="fas fa-calendar fa-2x text-gray-300"></i>
@@ -67,7 +76,7 @@ require 'cek-sesi.php';
                   <div class="row no-gutters align-items-center">
                     <div class="col mr-2">
                       <div class="text-xs font-weight-bold text-danger text-uppercase mb-1">Pengeluaran (Hari Ini)</div>
-                      <div class="h5 mb-0 font-weight-bold text-gray-800">Rp. 50.000</div>
+                      <div class="h5 mb-0 font-weight-bold text-gray-800">Rp. <?= number_format($jumlah_pengeluaran,2,',','.'); ?></div>
                     </div>
                     <div class="col-auto">
                       <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
@@ -96,7 +105,6 @@ require 'cek-sesi.php';
                 </div>
               </div>
             </div>
-
             <!--Karyawan -->
             <div class="col-xl-3 col-md-6 mb-4">
               <div class="card border-left-primary shadow h-100 py-2">
@@ -317,9 +325,8 @@ require 'cek-sesi.php';
       });        
     </script>
   
-    <script type="text/javascript">
-        
-        // Set new default font family and font color to mimic Bootstrap's default styling
+    <script type="text/javascript">        
+      // Set new default font family and font color to mimic Bootstrap's default styling
       Chart.defaults.global.defaultFontFamily = 'Nunito', '-apple-system,system-ui,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif';
       Chart.defaults.global.defaultFontColor = '#858796';
       // Pie Chart Example

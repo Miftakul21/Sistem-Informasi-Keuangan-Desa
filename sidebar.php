@@ -14,25 +14,33 @@
           <span>Dashboard</span></a>
       </li>
 
+      <!-- Nav Item - Pages Collapse Menu -->
       <li class="nav-item">
-          <a class="nav-link collapsed" href="kas.php">
-            <i class="fas fa-fw fa-users"></i>
-            <span>Keuangan Desa</span>
-          </a>
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#transaksi-desa" aria-expanded="true" aria-controls="transaksi-desa">
+          <i class="fas fa-building"></i>
+          <span>Transaksi Desa</span>
+        </a>
+        <div id="transaksi-desa" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+          <div class="bg-white py-2 collapse-inner rounded">
+            <h6 class="collapse-header">Transaksi Desa</h6>
+            <a class="collapse-item" href="kas.php">Keuangan Desa</a>
+            <a class="collapse-item" href="kategori.php">Kategori Desa</a>
+            <a class="collapse-item" href="laporan_keuangan_desa.php">Laporan Keuangan Desa</a>
+          </div>
+        </div>
       </li>
 
       <li class="nav-item">
-          <a class="nav-link collapsed" href="pinjaman.php">
-            <i class="fas fa-fw fa-users"></i>
-            <span>Keuangan Pinjaman</span>
-          </a>
-      </li>
-
-      <li class="nav-item">
-          <a class="nav-link collapsed" href="kategori.php">
-            <i class="fas fa-fw fa-users"></i>
-            <span>Kategori</span>
-          </a>
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#transaksi-pinjaman" aria-expanded="true" aria-controls="transaksi-pinjaman">
+          <i class="fas fa-hand-holding-usd"></i>
+          <span>Transaksi Pinjaman</span>
+        </a>
+        <div id="transaksi-pinjaman" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+          <div class="bg-white py-2 collapse-inner rounded">
+            <a class="collapse-item" href="pinjaman.php">Keuangan Pinjaman</a>
+            <a class="collapse-item" href="laporan_keuangan_pinjaman.php">Laporan Keuangan Desa</a>
+          </div>
+        </div>
       </li>
 
       <li class="nav-item">
@@ -41,16 +49,9 @@
           <span>Karyawan</span>
         </a>
       </li>
-
-      <li class="nav-item">
-        <a class="nav-link collapsed" href="karyawan.php">
-          <i class="fas fa-fw fa-users"></i>
-          <span>Cetak Laporan</span>
-        </a>
-      </li>
-
+      
       <!-- sidebar button  -->
-      <div class="text-center d-none d-md-inline">
+      <div class="text-center d-none d-md-inline" style="margin-top: 10rem;">
         <button class="rounded-circle border-0" id="sidebarToggle"></button>
       </div>
     </ul>

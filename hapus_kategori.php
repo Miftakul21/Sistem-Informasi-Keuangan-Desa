@@ -1,10 +1,11 @@
 <?php 
     include('koneksi.php');
-    $id_kas = $_GET['id_kas'];
-    $query = mysqli_query($koneksi,"DELETE FROM kas WHERE id_kas = $id_kas ");
+
+    $id = $_GET['id'];
+    $query = mysqli_query($koneksi,"DELETE FROM kategori WHERE id = $id");
     
     if ($query) {
-        header("location:kas.php"); 
+        header("Location:kategori.php"); 
     }
     else{
         echo "ERROR, data gagal dihapus". mysqli_error($koneksi);

@@ -66,7 +66,7 @@
                                             <button class="btn btn-danger" data-id="<?= $p['id'] ?>" onclick="hapus(this)"><i class="fa fa-trash"></i></button>
                                         </td>
                                         <td>
-                                            <!-- <a href="detail_anggota_pinjam.php?id_anggota_pinjam=<?= $id; ?>" class="btn btn-primary"><i class="fa fa-info mr-1"></i> Detail</a> -->
+                                            <a href="detail_anggota_pinjam.php?id_anggota_pinjam=<?= $p['id']; ?>" class="btn btn-primary"><i class="fa fa-info mr-1"></i> Detail</a>
                                         </td>
                                     </tr>
                                     <?php endforeach; ?>
@@ -140,7 +140,8 @@
         </div>
         <!-- Modal Mengedit-->
         <?php 
-            foreach($query_peminjam as $p):
+            $query = mysqli_query($koneksi, "SELECT a.*, b.nominal_pinjaman FROM anggota_pinjam AS a JOIN pinjaman AS b ON a.id = b.id_pinjaman");
+            foreach($query as $p):
         ?>
         <div id="myPinjamanEdit<?= $p['id']; ?>" class="modal fade" role="dialog">
             <div class="modal-dialog model-lg">
@@ -171,7 +172,7 @@
                                     </div>
                                     <div class="mb-3">
                                         <label for="nominal" class="form-label">Nominal Pinjaman<span class="text-danger">*</span></label>
-                                        <input type="number" class="form-control" id="nominal" name="nominal_pinjam" value="<?= $p['nominal_pinjam']; ?>">
+                                        <input type="number" class="form-control" id="nominal" name="nominal_pinjam" value="<?= $p['nominal_pinjaman']; ?>">
                                     </div>                                    
                                     <div class="mb-3">
                                         <label for="jangka_pinjaman" class="form-label">Jangka Pinjaman<span class="text-danger">*</span></label>
@@ -234,8 +235,7 @@
                             location.reload(true);
                         }
                     })
-                }
-                // alert('Test id : ' + id);
+                } 
             }
 
         </script>

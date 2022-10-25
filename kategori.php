@@ -9,7 +9,7 @@ require 'cek-sesi.php';
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
-    <title>Dashboard - Admin</title>
+    <title>Kategori Keuangan Desa</title>
     <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
     <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
     <link href="css/sb-admin-2.min.css" rel="stylesheet">
@@ -49,6 +49,7 @@ require 'cek-sesi.php';
                                             <tr>
                                                 <th>No</th>
                                                 <th>Keterangan</th>
+                                                <th>Aksi</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -60,8 +61,11 @@ require 'cek-sesi.php';
                                             <tr>
                                                 <th scope="row"><?= $no++; ?></th>
                                                 <td><?= $d['kategori']; ?></td>
+                                                <td>
+                                                    <button class="btn btn-warning" data-toggle="modal" data-target="#myKategoriEdit<?= $d['id']; ?>"><i class="fa fa-edit"></i></button>
+                                                    <button class="btn btn-danger" data-id="<?= $d['id'] ?>" onclick="hapus(this)"><i class="fa fa-trash"></i></button>
+                                                </td>
                                             </tr>
-
                                             <?php endforeach; ?>
                                         </tbody>
                                     </table>
@@ -71,7 +75,8 @@ require 'cek-sesi.php';
                     </div>
                 </div>
             </div>
-            <!-- Modal Menambahkan-->
+
+            <!-- Modal Menambahkan -->
             <div id="myKategori" class="modal fade" role="dialog">
                 <div class="modal-dialog">
                     <div class="modal-content">
@@ -96,18 +101,65 @@ require 'cek-sesi.php';
                     </div>
                 </div>
             </div>
+
+            <!-- Mengedit -->
+            <?php foreach($data as $d): ?>
+            <div id="myKategoriEdit<?= $d['id'] ?>" class="modal fade" role="dialog">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title">Edit Data</h4>
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        </div>
+                            <!-- body modal -->
+                            <form action="kategori_edit.php" method="get">
+                                <div class="modal-body">
+                                    <div class="mb-3">
+                                        <label for="kategori" class="form-label">Kategori<span class="text-danger">*</span></label>
+                                        <input type="hidden" name="id" value="<?= $d['id'] ?>">
+                                        <input type="text" class="form-control" id="kategori" name="kategori" value="<?= $d['kategori']; ?>">
+                                    </div>
+                                </div>
+                            <!-- footer modal -->
+                                <div class="modal-footer">
+                                <button type="submit" class="btn btn-secondary" >Ubah</button>
+                            </form>
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Keluar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <?php endforeach; ?>
         </div>
     <?php require 'footer.php'?>
     </div>
 </div>
     <?php require 'logout-modal.php'; ?>
+        <script src="js/jquery.js"></script>
         <script src="vendor/jquery/jquery.min.js"></script>
         <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
         <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
         <script src="js/sb-admin-2.min.js"></script>
-        <script src="vendor/chart.js/Chart.min.js"></script>
-        <script src="vendor/datatables/jquery.dataTables.min.js"></script>
-        <script src="vendor/datatables/dataTables.bootstrap4.min.js"></script>
-        <script src="js/demo/datatables-demo.js"></script>
+        <script>
+            const hapus = (el) => {
+                let id = $(el).data('id');
+                let konfirmasi = confirm('Anda ingin menghapus?');
+
+                if(konfirmasi) {
+                    $.ajax({
+                        url: 'hapus_kategori.php',
+                        type: 'GET',
+                        data: {
+                            id: id
+                        },
+                        cache: false,
+                        success: (data) => {
+                            console.log('');
+                            location.reload(true);
+                        }
+                    })
+                } 
+            }
+        </script>
     </body>
 </html>

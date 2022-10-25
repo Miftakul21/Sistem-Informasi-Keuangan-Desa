@@ -4,21 +4,21 @@
     $id = $_GET['id'];
     $kode = $_GET['kode'];
     $nama = $_GET['nama'];
-    $no_telepon = $_GET['no_telepon'];
     $dukuh = $_GET['dukuh'];
     $alamat = $_GET['alamat'];
     $nominal_pinjam = $_GET['nominal_pinjam'];
-    $jum_pokok = $_GET['jum_pokok'];
-    $jum_jasa = $_GET['jum_jasa'];
-    $jangka_pinjaman = $_GET['jangka_pinjaman'];
+    $jangka_pinjaman = $_GET['jangka_pinjaman'];    
 
-    $query_pinjam = mysqli_query($koneksi, "SELECT * FROM anggota_pinjam WHERE id = '$id'");
-    $id_pinjam = mysqli_fetch_array($query_pinjam);
-    $id_anggota_pinjam = $id_pinjam['id_pinjam'];
+    $query = mysqli_query($koneksi,"UPDATE anggota_pinjam SET kode = '$kode', nama = '$nama', dukuh = '$dukuh', alamat = '$alamat' WHERE id = '$id'");
     
-    // echo var_dump($id.' '.$kode.' '.$nama.' '.$no_telepon.' '.$dukuh.' '.$alamat);
+    // data pinjaman
+    $pokok = $nominal_pinjam / 10;
+    $jasa = ($nominal_pinjam * 2) / 100;
+    $total_pinjaman = $jasa + $pokok;
+    $pinjaman_penelusuran = $nominal_pinjam;
+    $pinjaman_gabungan = $total_pinjaman * $jangka_pinjaman;
 
-    $query = mysqli_query($koneksi,"UPDATE anggota_pinjam SET kode = '$kode', nama = '$nama', no_telepon = '$no_telepon', dukuh = '$dukuh', alamat = '$alamat', nominal_pinjam = '$nominal_pinjam', jum_pokok = '$jum_pokok', jum_jasa = '$jum_jasa', jangka_pinjaman = '$jangka_pinjaman', id_pinjam = '$id_anggota_pinjam' WHERE id = '$id'");
+    $query2 = mysqli_query($koneksi, "UPDATE pinjaman SET nominal_pinjaman = '$nominal_pinjam', pokok = '$pokok', jasa = '$jasa', total_pokok_jasa = '$total_pinjaman', pinjaman_penelusuran = '$pinjaman_penelusuran', pinjaman_gabungan = '$pinjaman_gabungan', jangka_pinjaman = '$jangka_pinjaman', keterangan = '' WHERE id_pinjaman = '$id'");
 
     if ($query) {
         header("location:pinjaman.php"); 

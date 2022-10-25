@@ -10,5 +10,4 @@
     else{
         echo "ERROR, data gagal ditambahkan". mysqli_error($koneksi);
     }
-
 ?>
