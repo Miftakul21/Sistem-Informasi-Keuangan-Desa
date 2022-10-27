@@ -33,7 +33,7 @@ require 'cek-sesi.php';
     <div id="content">
         <!-- Topbar -->
         <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
-            <h1>BUMDES MINGGIRSARI</h1>
+            <h1>BUMDES DESA MAJU MAKMUR</h1>
     <?php require 'user.php'; ?>
         </nav>
             <div class="container-fluid">

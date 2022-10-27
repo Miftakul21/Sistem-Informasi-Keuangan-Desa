@@ -42,14 +42,14 @@
           </div>
         </div>
       </li>
-
+      
       <li class="nav-item">
         <a class="nav-link collapsed" href="karyawan.php">
           <i class="fas fa-fw fa-users"></i>
           <span>Karyawan</span>
         </a>
       </li>
-      
+
       <!-- sidebar button  -->
       <div class="text-center d-none d-md-inline" style="margin-top: 10rem;">
         <button class="rounded-circle border-0" id="sidebarToggle"></button>

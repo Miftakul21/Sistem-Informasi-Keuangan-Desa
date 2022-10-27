@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 20 Okt 2022 pada 16.35
+-- Waktu pembuatan: 27 Okt 2022 pada 05.52
 -- Versi server: 10.4.24-MariaDB
 -- Versi PHP: 8.0.19
 
@@ -24,39 +24,25 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `admin`
+-- Struktur dari tabel `anggota_pinjam`
 --
 
-CREATE TABLE `admin` (
-  `id_admin` int(11) NOT NULL,
-  `nama` varchar(40) NOT NULL,
-  `email` varchar(40) NOT NULL,
-  `pass` varchar(40) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Dumping data untuk tabel `admin`
---
-
-INSERT INTO `admin` (`id_admin`, `nama`, `email`, `pass`) VALUES
-(1, 'novandika', 'novandika@gmail.com', 'admin123');
-
--- --------------------------------------------------------
-
---
--- Struktur dari tabel `angota_pinjam`
---
-
-CREATE TABLE `angota_pinjam` (
+CREATE TABLE `anggota_pinjam` (
   `id` int(11) NOT NULL,
-  `Kode` varchar(20) NOT NULL,
+  `kode` varchar(20) NOT NULL,
   `nama` varchar(100) NOT NULL,
-  `jenis_kelamin` varchar(20) NOT NULL,
-  `no_hp` varchar(20) NOT NULL,
   `dukuh` varchar(80) NOT NULL,
-  `alamat` varchar(255) NOT NULL,
-  `id_pinjam` int(11) NOT NULL
+  `alamat` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data untuk tabel `anggota_pinjam`
+--
+
+INSERT INTO `anggota_pinjam` (`id`, `kode`, `nama`, `dukuh`, `alamat`) VALUES
+(1, 'Pribadi', 'Miftakul Huda', 'Dukuh 1', 'MINGGIRSARI 01/01'),
+(2, 'POK 1', 'Bejo Ojo Dumeh', 'Dukuh 2', 'MINGGIRSARI 01/02'),
+(3, 'Pribadi', 'Uraraka Ocahaco Chan', 'Dukuh 5', 'MINGGIRSARI 02/02');
 
 -- --------------------------------------------------------
 
@@ -65,27 +51,22 @@ CREATE TABLE `angota_pinjam` (
 --
 
 CREATE TABLE `angsuran` (
-  `id_angsuran` int(11) NOT NULL,
-  `tanggal` date NOT NULL,
-  `code` varchar(10) NOT NULL,
-  `dukuh` varchar(10) NOT NULL,
-  `nama` varchar(40) NOT NULL,
-  `alamat` varchar(50) NOT NULL,
-  `jangka_pinjaman` int(4) NOT NULL,
-  `nominal_pinjaman_awal` int(25) NOT NULL,
-  `pokok` int(25) NOT NULL,
-  `jasa` int(25) NOT NULL,
-  `Total_pokok_jasa` int(25) NOT NULL,
-  `sisa_pinjaman_belum_jasa` int(25) NOT NULL,
-  `sisa_pinjaman_pokok_dan_jasa` int(25) NOT NULL
+  `id_anggota` varchar(40) NOT NULL,
+  `tgl` date NOT NULL,
+  `jasa` int(11) NOT NULL,
+  `pokok` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data untuk tabel `angsuran`
 --
 
-INSERT INTO `angsuran` (`id_angsuran`, `tanggal`, `code`, `dukuh`, `nama`, `alamat`, `jangka_pinjaman`, `nominal_pinjaman_awal`, `pokok`, `jasa`, `Total_pokok_jasa`, `sisa_pinjaman_belum_jasa`, `sisa_pinjaman_pokok_dan_jasa`) VALUES
-(2, '2022-10-19', 'Pribadi', '1', 'Novandika Yuda P', 'Nginden Raya 69', 10, 500000, 50000, 10000, 60000, 500000, 600000);
+INSERT INTO `angsuran` (`id_anggota`, `tgl`, `jasa`, `pokok`) VALUES
+('2', '2022-10-25', 50000, 10000),
+('2', '2022-10-25', 5000, 10000),
+('2', '2022-10-25', 5000, 10000),
+('1', '2022-10-25', 50000, 10000),
+('1', '2022-10-25', 5000, 2000);
 
 -- --------------------------------------------------------
 
@@ -115,19 +96,21 @@ INSERT INTO `catatan` (`id_catatan`, `catatan`) VALUES
 CREATE TABLE `karyawan` (
   `id_karyawan` int(11) NOT NULL,
   `nama` varchar(40) NOT NULL,
-  `posisi` varchar(40) NOT NULL,
-  `alamat` varchar(40) NOT NULL,
-  `umur` int(11) NOT NULL,
-  `kontak` varchar(40) NOT NULL
+  `email` varchar(40) NOT NULL,
+  `pass` varchar(40) NOT NULL,
+  `no_telepon` varchar(20) NOT NULL,
+  `alamat` varchar(100) NOT NULL,
+  `role` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data untuk tabel `karyawan`
 --
 
-INSERT INTO `karyawan` (`id_karyawan`, `nama`, `posisi`, `alamat`, `umur`, `kontak`) VALUES
-(1, 'Rizky', 'ketua', 'Surabaya', 21, '-'),
-(7, 'Miftahul Huda', 'bendahara', 'Wejangan Wetan', 21, '-');
+INSERT INTO `karyawan` (`id_karyawan`, `nama`, `email`, `pass`, `no_telepon`, `alamat`, `role`) VALUES
+(1, 'Novandika Yuda P.', 'novandika123@gmail.com', 'admin123', '085204118148', 'Ponorogo', 'admin'),
+(4, 'Putra Dwi A.', 'putradwi@gmail.com', '12345678', '12345678', 'Surabaya 1', 'Bendahara'),
+(6, 'Rizky FIjar Hidayat', 'rizkyfajar@gmail.com', '123456', '08810367187777', 'Surabaya Kepanjen Rt.1 Rw. 10', 'Sekertaris');
 
 -- --------------------------------------------------------
 
@@ -151,7 +134,8 @@ CREATE TABLE `kas` (
 INSERT INTO `kas` (`id_kas`, `tgl`, `keterangan`, `debet`, `kredit`, `saldo`) VALUES
 (2, '2022-10-20', 1, 0, 500000, 300000),
 (3, '2022-10-20', 1, 1000000, 0, 1400000),
-(4, '2022-10-20', 1, 460000, 0, 6460000);
+(5, '2022-10-25', 1, 100000, 0, 6580000),
+(6, '2022-10-25', 1, 50000, 0, 6630000);
 
 -- --------------------------------------------------------
 
@@ -171,8 +155,34 @@ CREATE TABLE `kategori` (
 INSERT INTO `kategori` (`id`, `kategori`) VALUES
 (1, 'Saldo Awal'),
 (2, 'Honor Karyawan'),
-(3, 'Pembayaran Wifi'),
-(4, 'Pemayaran Geroba Roda Mas');
+(3, 'Pembayaran Wifi');
+
+-- --------------------------------------------------------
+
+--
+-- Struktur dari tabel `pinjaman`
+--
+
+CREATE TABLE `pinjaman` (
+  `id_pinjaman` varchar(30) NOT NULL,
+  `nominal_pinjaman` int(11) NOT NULL,
+  `pokok` int(11) NOT NULL,
+  `jasa` int(11) NOT NULL,
+  `total_pokok_jasa` int(11) NOT NULL,
+  `pinjaman_penelusuran` int(11) NOT NULL,
+  `pinjaman_gabungan` int(11) NOT NULL,
+  `jangka_pinjaman` varchar(10) NOT NULL,
+  `keterangan` varchar(10) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data untuk tabel `pinjaman`
+--
+
+INSERT INTO `pinjaman` (`id_pinjaman`, `nominal_pinjaman`, `pokok`, `jasa`, `total_pokok_jasa`, `pinjaman_penelusuran`, `pinjaman_gabungan`, `jangka_pinjaman`, `keterangan`) VALUES
+('1', 500000, 50000, 10000, 60000, 500000, 600000, '10', ''),
+('2', 2500000, 250000, 50000, 300000, 2500000, 1500000, '5', ''),
+('3', 5000000, 500000, 100000, 600000, 5000000, 6000000, '10', '');
 
 -- --------------------------------------------------------
 
@@ -190,29 +200,17 @@ CREATE TABLE `saldo` (
 --
 
 INSERT INTO `saldo` (`id`, `saldo`) VALUES
-(1, 6460000);
+(1, 6630000);
 
 --
 -- Indexes for dumped tables
 --
 
 --
--- Indeks untuk tabel `admin`
+-- Indeks untuk tabel `anggota_pinjam`
 --
-ALTER TABLE `admin`
-  ADD PRIMARY KEY (`id_admin`);
-
---
--- Indeks untuk tabel `angota_pinjam`
---
-ALTER TABLE `angota_pinjam`
+ALTER TABLE `anggota_pinjam`
   ADD PRIMARY KEY (`id`);
-
---
--- Indeks untuk tabel `angsuran`
---
-ALTER TABLE `angsuran`
-  ADD PRIMARY KEY (`id_angsuran`);
 
 --
 -- Indeks untuk tabel `catatan`
@@ -249,22 +247,10 @@ ALTER TABLE `saldo`
 --
 
 --
--- AUTO_INCREMENT untuk tabel `admin`
+-- AUTO_INCREMENT untuk tabel `anggota_pinjam`
 --
-ALTER TABLE `admin`
-  MODIFY `id_admin` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
-
---
--- AUTO_INCREMENT untuk tabel `angota_pinjam`
---
-ALTER TABLE `angota_pinjam`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT untuk tabel `angsuran`
---
-ALTER TABLE `angsuran`
-  MODIFY `id_angsuran` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+ALTER TABLE `anggota_pinjam`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT untuk tabel `catatan`
@@ -276,13 +262,13 @@ ALTER TABLE `catatan`
 -- AUTO_INCREMENT untuk tabel `karyawan`
 --
 ALTER TABLE `karyawan`
-  MODIFY `id_karyawan` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id_karyawan` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT untuk tabel `kas`
 --
 ALTER TABLE `kas`
-  MODIFY `id_kas` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id_kas` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT untuk tabel `kategori`
